@@ -10,8 +10,8 @@ import java.nio.file.Path
 
 import viper.silicon.{Silicon, SiliconFrontend, SymbExLogger}
 import viper.silver.plugin.SilverPluginManager
-import viper.silver.reporter.NoopReporter
-import viper.silver.testing.{LocatedAnnotation, MissingOutput, SilSuite, UnexpectedOutput}
+import viper.silver.reporter.{NoopReporter, Reporter}
+import viper.silver.testing._
 import viper.silver.verifier.{Verifier, Failure => SilFailure, Success => SilSuccess, VerificationResult => SilVerificationResult}
 
 /**
@@ -22,10 +22,12 @@ class SiliconArpTests extends SilSuite {
   private val siliconTestDirectories = Seq("consistency")
   private val silTestDirectories = Seq("all", "quantifiedpermissions", "wands", "examples", "quantifiedpredicates" ,"quantifiedcombinations")
 
-  val testDirectories = arpTestDirectories ++ siliconTestDirectories ++ silTestDirectories
+  val testDirectories = arpTestDirectories //++ siliconTestDirectories ++ silTestDirectories
 
   override def frontend(verifier: Verifier, files: Seq[Path]) = {
     require(files.length == 1, "tests should consist of exactly one file")
+
+    println(files(0))
 
     SymbExLogger.reset()
     SymbExLogger.filePath = files.head

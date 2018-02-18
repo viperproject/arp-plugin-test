@@ -9,7 +9,7 @@ import java.nio.file.Path
 
 import viper.silver.frontend.Frontend
 import viper.silver.reporter.{NoopReporter, Reporter, StdIOReporter}
-import viper.silver.testing.SilSuite
+import viper.silver.testing.{ProjectInfo, SilSuite}
 import viper.silver.verifier.Verifier
 import viper.carbon.{CarbonFrontend, CarbonVerifier}
 
@@ -18,12 +18,12 @@ class CarbonArpTests extends SilSuite {
   private val siliconTestDirectories = Seq("consistency")
   private val silTestDirectories = Seq("all", "quantifiedpermissions", "wands", "examples", "quantifiedpredicates" ,"quantifiedcombinations")
 
-  val testDirectories = arpTestDirectories ++ siliconTestDirectories ++ silTestDirectories
+  val testDirectories = arpTestDirectories // ++ siliconTestDirectories ++ silTestDirectories
 
   override def frontend(verifier: Verifier, files: Seq[Path]): Frontend = {
     require(files.length == 1, "tests should consist of exactly one file")
 
-    val fe = new CarbonFrontend(NoopReporter)
+    val fe = new MyCarbonFrontend(NoopReporter)
     fe.init(verifier)
     fe.reset(files.head)
     fe
@@ -43,6 +43,15 @@ class CarbonArpTests extends SilSuite {
     println(s"config: ${carbon.config.plugin}")
 
     carbon
+  }
+
+  class MyCarbonFrontend(override val reporter: Reporter) extends CarbonFrontend(reporter) {
+
+    // patch missing config
+    override def init(verifier: Verifier): Unit = {
+      super.init(verifier)
+      _config = verifier.asInstanceOf[CarbonVerifier].config
+    }
   }
 
 }
