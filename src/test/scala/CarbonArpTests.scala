@@ -40,7 +40,6 @@ class CarbonArpTests extends SilSuite {
     val debugInfo = ("startedBy" -> "viper.carbon.tests.CarbonArpTests") :: Nil
     val carbon = CarbonVerifier(debugInfo)
     carbon.parseCommandLine(args :+ "dummy-file-to-prevent-cli-parser-from-complaining-about-missing-file-name.silver")
-    println(s"config: ${carbon.config.plugin}")
 
     carbon
   }

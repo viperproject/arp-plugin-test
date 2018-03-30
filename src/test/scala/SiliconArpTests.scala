@@ -27,8 +27,6 @@ class SiliconArpTests extends SilSuite {
   override def frontend(verifier: Verifier, files: Seq[Path]) = {
     require(files.length == 1, "tests should consist of exactly one file")
 
-    println(files(0))
-
     SymbExLogger.reset()
     SymbExLogger.filePath = files.head
     SymbExLogger.initUnitTestEngine()
