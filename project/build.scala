@@ -99,13 +99,13 @@ object ARPTestBuild extends Build {
     lazy val sil = "viper" %% "silver" %  "0.1-SNAPSHOT"
     lazy val silSrc = RootProject(new java.io.File("../silver"))
 
-    lazy val arp = "viper" %% "arp" %  "0.1-SNAPSHOT"
+    lazy val arp = "viper" %% "arp" %  "1.0-SNAPSHOT"
     lazy val arpSrc = RootProject(new java.io.File("../arp-plugin"))
 
-    lazy val silicon = "viper" %% "silicon" %  "0.1-SNAPSHOT"
+    lazy val silicon = "viper" %% "silicon" %  "1.1-SNAPSHOT"
     lazy val siliconSrc = RootProject(new java.io.File("../silicon"))
 
-    lazy val carbon = "viper" %% "carbon" %  "0.1-SNAPSHOT"
+    lazy val carbon = "viper" %% "carbon" %  "1.0-SNAPSHOT"
     lazy val carbonSrc = RootProject(new java.io.File("../carbon"))
   }
 }
