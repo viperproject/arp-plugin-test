@@ -38,6 +38,12 @@ object ARPTestBuild extends Build {
               mainClass in Compile := Some("viper.silicon.SiliconRunner"),
               mainClass in assembly := Some("viper.silicon.SiliconRunner"),
               jarName in assembly := "arp-plugin-test.jar",
+              assemblyMergeStrategy in assembly := {
+                case "logback.xml" => MergeStrategy.first
+                case x =>
+                    val oldStrategy = (assemblyMergeStrategy in assembly).value
+                    oldStrategy(x)
+              },
               test in assembly := {},
               fork := true,
               javaOptions in run ++= Seq("-Xss128M", "-Dfile.encoding=UTF-8"),
