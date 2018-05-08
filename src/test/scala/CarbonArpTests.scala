@@ -9,6 +9,7 @@ import java.nio.file.Path
 
 import viper.silver.frontend.Frontend
 import viper.silver.reporter.{NoopReporter, Reporter, StdIOReporter}
+import viper.silver.logger.SilentLogger
 import viper.silver.testing.{ProjectInfo, SilSuite}
 import viper.silver.verifier.Verifier
 import viper.carbon.{CarbonFrontend, CarbonVerifier}
@@ -44,7 +45,7 @@ class CarbonArpTests extends SilSuite {
     carbon
   }
 
-  class MyCarbonFrontend(override val reporter: Reporter) extends CarbonFrontend(reporter) {
+  class MyCarbonFrontend(override val reporter: Reporter) extends CarbonFrontend(reporter, SilentLogger().get) {
 
     // patch missing config
     override def init(verifier: Verifier): Unit = {
