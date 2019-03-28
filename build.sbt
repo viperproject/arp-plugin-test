@@ -36,6 +36,7 @@ lazy val arp_plugin_test = (project in file("."))
 
     // Test settings
     Test / javaOptions ++= (run / javaOptions).value,
+    Test / parallelExecution := false,
     // Options passed to JVMs forked by test-related Sbt command.
     // See http://www.scala-sbt.org/0.12.4/docs/Detailed-Topics/Forking.html
     // In contrast to what the documentation states, it seemed
@@ -57,5 +58,8 @@ lazy val arp_plugin_test = (project in file("."))
     // the problem and Silicon seems to be fine with less stack.
     // Not sure what to do if Silicon really required so much
     // stack at some point.
-
+    assemblyMergeStrategy in assembly := {
+        case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+        case x => MergeStrategy.first
+    },
   )
