@@ -8,6 +8,7 @@ package viper.silicon.tests
 
 import java.nio.file.Path
 
+import viper.silicon.verifier.{Verifier => SiliconVerifier}
 import viper.silicon.{Silicon, SiliconFrontend, SymbExLogger}
 import viper.silver.plugin.SilverPluginManager
 import viper.silver.reporter.{NoopReporter, Reporter}
@@ -57,7 +58,7 @@ class SiliconArpTests extends SilSuite {
     val reporter = NoopReporter
     val debugInfo = ("startedBy" -> "viper.silicon.tests.SiliconArpTests") :: Nil
     val silicon = Silicon.fromPartialCommandLineArguments(args, reporter, debugInfo)
-
+    SiliconVerifier.inputFile_=(None)
     silicon
   }
 }
