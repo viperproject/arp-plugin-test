@@ -14,6 +14,7 @@ import viper.silver.logger.SilentLogger
 import viper.silver.testing.{ProjectInfo, SilSuite}
 import viper.silver.verifier.Verifier
 import viper.carbon.{CarbonFrontend, CarbonVerifier}
+import viper.silver.plugin.PluginAwareReporter
 
 class CarbonArpTests extends SilSuite {
   private val arpTestDirectories = Seq("arp")
@@ -25,7 +26,7 @@ class CarbonArpTests extends SilSuite {
   override def frontend(verifier: Verifier, files: Seq[Path]): Frontend = {
     require(files.length == 1, "tests should consist of exactly one file")
 
-    val fe = new MyCarbonFrontend(NoopReporter)
+    val fe = new MyCarbonFrontend(PluginAwareReporter(NoopReporter))
     fe.init(verifier)
     fe.reset(files.head)
     fe
@@ -46,7 +47,7 @@ class CarbonArpTests extends SilSuite {
     carbon
   }
 
-  class MyCarbonFrontend(override val reporter: Reporter) extends CarbonFrontend(reporter, SilentLogger().get) {
+  class MyCarbonFrontend(override val reporter: PluginAwareReporter) extends CarbonFrontend(reporter, SilentLogger().get) {
 
     // patch missing config
     override def init(verifier: Verifier): Unit = {
